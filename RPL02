@@ -1,0 +1,146 @@
+%% Práctica 2 Señales continuas
+% 
+%
+%% INTEGRANTES
+% Robles Martínez Dario Antonio
+%% OBJETIVOS
+%
+% * Manipulación básica de MATLAB
+% * Gráficas de señales reales y complejas continuas 
+% * Transformación de señales continuas (escalamientos y traslaciones)
+% * Calculo de energía y potencia de señales continuas
+%% INTRODUCCIÓN
+%
+%  MATLAB es un entorno de cálculo técnico de altas prestaciones para cálculo numérico y visualización. Integra:
+% * Manipulación básica de MATLAB
+% * Gráficas de señales reales y complejas continuas 
+% * Transformación de señales continuas (escalamientos y traslaciones)
+% * Calculo de energía y potencia de señales continuas
+%  en un entorno fácil de usar, donde los problemas y las soluciones son expresados como se escriben matemáticamente, sin la programación tradicional. El nombre MATLAB proviene de ``MATrix LABoratory'' (Laboratorio de Matrices). MATLAB fue escrito originalmente para proporcionar un acceso sencillo al software matricial desarrollado por los proyectos LINPACK y EISPACK, que juntos representan lo más avanzado en programas de cálculo matricial. MATLAB es un sistema interactivo cuyo elemento básico de datos es una matriz que no requiere dimensionamiento. Esto permite resolver muchos problemas numéricos en una fracción del tiempo que llevaría hacerlo en lenguajes como C, BASIC o FORTRAN. MATLAB ha evolucionado en los últimos años a partir de la colaboración de muchos usuarios. En entornos universitarios se ha convertido en la herramienta de enseñanza estándar para cursos de introducción en álgebra lineal aplicada, así como cursos avanzados en otras áreas. En la industria, MATLAB se utiliza para investigación y para resolver problemas prácticos de ingeniería y matemáticas, con un gran énfasis en aplicaciones de control y procesamiento de señales. MATLAB también proporciona una serie de soluciones específicas denominadas TOOLBOXES. Estas son muy importantes para la mayoría de los usuarios de MATLAB y son conjuntos de funciones MATLAB que extienden el entorno MATLAB para resolver clases particulares de problemas como:
+% * Procesamiento de señales
+% * Diseño de sistemas de control
+% * Simulación de sistemas dinámicos
+% * Identificación de sistemas
+% * Redes neuronales y otros.
+%% DESARROLLO
+%
+%  3.
+syms t w
+f1=fourier(cos(2.*t).*heaviside(t),t,w);
+f = @(w) 1./(4+w.*1i);
+t = -5:0.01:5;
+figure
+plot(t,cos(2.*t).*heaviside(t));
+title('f(t)=(cos(2t))u(t)');
+w = -10:0.01:10;
+figure
+plot(w,real(f(w)));
+title('Parte real de F(w)');
+figure
+plot(w,imag(f(w)));
+title('Parte imaginaria de F(w)');
+%  4.
+f = @(t) exp(-t).*cos(2*pi*t);
+t = 0;
+f(t)
+t = -2:2;
+f(t)
+figure
+plot(t,f(t));
+xlabel('t');
+ylabel('f(t)');
+grid on;
+t = -2:0.01:2;
+figure
+plot(t,f(t));
+xlabel('t');
+ylabel('f(t)');
+grid on;
+%% 
+
+u = @(t) (t>=0);
+t = -2:2;
+figure
+plot(t,u(t));
+xlabel('t');
+ylabel('u(t)');
+t=-2:0.01:2;
+figure
+plot(t,u(t));
+xlabel('t');
+ylabel('u(t)');
+axis([-2 2 -0.1 1.1]);
+p = @(t) ((t>=0)&(t<1));
+t = -1:0.01:2;
+figure
+plot(t,p(t));
+xlabel('t');
+ylabel('p(t)=u(t)-u(t-1)');
+axis([-1 2 -.1 1.1]);
+%% 
+
+g = @(t) exp(-t).*cos(2*pi*t).*(t>=0);
+t=-2:0.01:2;
+figure
+plot(t,g(2*t+1));
+xlabel('t');
+ylabel('g(2t+1)');
+grid on;
+figure
+plot(t,g(-t+1));
+xlabel('t');
+ylabel('-t+1');
+grid on;
+plot(t,g(2*t+1)+g(-t+1));
+xlabel('t');
+ylabel('h(t)');
+grid on;
+%% 
+
+x = @(t) exp(-t).*((t>=0)&(t<1));
+t = 0:0.01:1;
+E_x = sum(x(t).*x(t)*0.01)
+x_cuadrado = @(t) exp(-2*t).*((t>=0)&(t<1));
+E_x = quad(x_cuadrado,0,1)
+g_cuadrado = @(t) exp(-2*t).*(cos(2*pi*t).^2).*(t>=0);
+t = 0:0.001:100;
+E_g = sum(g_cuadrado(t)*0.001)
+E_g = quad(g_cuadrado,0,100)
+%  5.
+%a
+t = 0:0.01:1;
+x = @(t) t;
+E_x = sum(x(t).*x(t)*0.01)
+figure
+plot(t,x(t));xlabel('t');ylabel('x(t)');
+
+%b
+t = -1:0.01:0;
+x = @(t) -t;
+E_x1 = sum(x(t).*x(t)*0.01)
+figure
+plot(t,x(t));xlabel('t');ylabel('x1(t)');
+
+%c
+t = 0:0.01:1;
+x = @(t) -t;
+E_x2 = sum(x(t).*x(t)*0.01)
+figure
+plot(t,x(t));xlabel('t');ylabel('x2(t)');
+
+%d
+t = 0:0.01:2;
+x = @(t) (t-1).*(t>=1);
+E_x3 = sum(x(t).*x(t)*0.01)
+figure
+plot(t,x(t));xlabel('t');ylabel('x3(t)');
+
+%e
+t = 0:0.01:1;
+x = @(t) 2.*t;
+E_x4 = sum(x(t).*x(t)*0.01)
+figure
+plot(t,x(t));xlabel('t');ylabel('x4(t)');
+git init
+git remoto agregar origen https://github.com/DarioAntonio/ASySPrac-02DarioRobles -ASySPrac-02DarioRobles.html.git
+ git push -u master de origen
